@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A Quick and Step by Ste Guide to Regular Expression using Python">
+    <meta name="keywords" content="python,regex,programming,regular-expressions">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Random Python Tricks for Random Moods ✨">
+    <meta property="og:description" content="A Personal & Techincal Blog - A Quick and Step by Ste Guide to Regular Expression using Python">
+    <meta property="og:site_name" content="Vidhi Bagadia">
+    <meta property="og:image" content="https://www.hindustantimes.com/rf/image_size_444x250/HT/p2/2020/01/13/Pictures/_67acd868-35de-11ea-bb16-55584621af3a.jpg">
+
+    <meta name="twitter:site" content="@veedhee_">
+    <meta name="twitter:image:src" content="https://www.hindustantimes.com/rf/image_size_444x250/HT/p2/2020/01/13/Pictures/_67acd868-35de-11ea-bb16-55584621af3a.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="article:published_time" content="2020-02-29T20:18:13Z">
+
+    <title>Random Python Tricks for Random Moods ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sunflower:wght@300;500&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="/_common/_assets/css/code.css">
+    <style>
+        .codehilite pre {
+            padding: 12px;
+        }
+        blockquote {
+            border-left: 5px solid #0A2342;
+            padding-left: 16px;
+            letter-spacing: 1.3;
+            font-style: italic;
+        }
+        .blog-article.container {
+            max-width: 820px;
+            z-index: 999999;
+        }
+        .blog-article {
+            font-family: 'Sunflower', Verdana, Geneva, Tahoma, sans-serif;
+            background: rgb(197, 221, 252);
+            color: black;
+            line-height: 1.5;
+            padding: 48px 56px;
+            border-radius: 4px;
+            font-weight: 300;
+        }
+        @media only screen and (max-width: 480px)  {
+            .blog-article {
+                padding: 36px 16px;
+            }
+            .blog-article h1 {
+                font-size: 1.75rem;
+            }
+        }
+        .blog-article h1 {
+            font-weight: 500;
+        }
+        body {
+              background: rgb(4,1,51);
+background: -moz-linear-gradient(75deg, rgba(4,1,51,1) 0%, rgba(9,9,121,1) 57%, rgba(0,46,187,1) 73%);
+background: -webkit-linear-gradient(75deg, rgba(4,1,51,1) 0%, rgba(9,9,121,1) 57%, rgba(0,46,187,1) 73%);
+background: linear-gradient(75deg, rgba(4,1,51,1) 0%, rgba(9,9,121,1) 57%, rgba(0,46,187,1) 73%);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#040133",endColorstr="#002ebb",GradientType=1); 
+ background-attachment: fixed;
+            position: relative;
+            margin: 0;
+            overflow-x: hidden;
+            min-height: 100vh;
+            padding: 16px;
+        }
+
+        .stars {
+            position:absolute;
+            top:0;
+            left:0;
+            right:0;
+            bottom:0;
+            width:100%;
+            height:100%;
+            display:block;
+            background:url(http://www.script-tutorials.com/demos/360/images/stars.png) repeat top center;
+            z-index:-1;
+          }  
+          img {
+              width: 100%;
+              height: auto;
+          }
+        .visible-nav-menu-head {
+            position: fixed;
+            top: 12px;
+            right: 12px;
+            width: 50px;
+            height: 50px;
+            background: rgb(180, 200, 238);
+            color: #0A2342;
+            font-size: 1.5rem;
+            text-align: center;
+            border-radius: 50%;
+            cursor: pointer;
+            padding-left: 10px;
+            z-index: 999999999;
+        }
+        .nav-menu-items {
+            display: none;
+            color: white;
+            position: absolute;
+            z-index: 999999;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 75%;
+        }
+        .nav-menu-items li {
+            list-style-type: none;
+            font-family: 'Sunflower', sans-serif;
+        }
+        .nav-menu-items a {
+            text-decoration: none;
+            color: white;
+            font-size: 2rem;
+            font-weight: 300;
+        }
+        .nav-menu-items a:hover {
+            text-decoration: underline;
+            color: white;
+            font-weight: 500;
+        }
+        .nav-bg { 
+        height: 0;
+        width:100%;
+        position:fixed;
+        bottom:0;
+        left:0;
+        background: rgb(2,0,36);
+        background: linear-gradient(15deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 64%, rgba(0,212,255,1) 100%);
+        transition: 650ms ease-out;
+        z-index: 99999;
+        }
+        .nav-bg.high-tide {
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+    <button class="visible-nav-menu-head">
+        &#9776; 
+    </button>
+    <ul class="nav-menu-items position-fixed">
+        <li><a href="/">🏠 Home</a></li>
+        <li><a href="/blog/">👩‍💻 Tech Blog</a></li>
+        <li><a href="/projects/">🛠️ Projects</a></li>
+        <li><a href="https://riskouse.wordpress.com">✍️ Scribbles</a></li>
+        <li><a href="https://instagram.com?">🎨 Doodles</a></li>
+        <li><a href="/resume/">📝 Resume</a></li>
+        <li><a href="/contact/">💬 Contact</a></li>
+    </ul>
+</nav>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script>
+    $(function(){
+        $(".visible-nav-menu-head").on('click', function() {
+            $(".nav-bg").toggleClass('high-tide');
+            $(".nav-menu-items").fadeToggle();
+        })
+    })
+</script>
+    <div class="stars"></div>
+    <div class="nav-bg"></div>
+    <section class="blog">
+        <article class="blog-article container">
+            <h1>Random Python Tricks for Random Moods ✨</h1>
+            
+            <span class="badge badge-info">python</span>
+            
+            <span class="badge badge-info">beginners</span>
+            
+            <div class="text-muted text-uppercase small mb-3">
+            Published on: March 1, 2020
+            </div>
+            <p>If you have been using Python for quite a duration, you might already be familiar with all, or most of the tricks that we'll discuss below. But I guess it's always best to go over them briskly if it has been days you've used something in particular.</p>
+<p>This will also include snippets, so you can just open your Python Interactive Shell and get started along with the examples.</p>
+<h4>✨ Let's start with something small and one-liner</h4>
+<p>One of the major concepts of code is to write as less code as possible and make the code as reusable as possible. Functions is one way, yes - the one example everybody gives when talking about reusability. Let's take it down one notch.
+Say you want a list in Python of length 5 with all elements as 1. Writing it as <code>lst = [1, 1, 1, 1, 1]</code> would be the way to go, right? But isn't it... repeating and we're diverting from the reusability everybody talks about?
+Good news, we can cut our efforts here.
+We can write it as:
+<code>lst = [1]*5</code>
+This is followed for strings too. If you want, for example, to hide a phone number and show only the last 3 digits of the number to the user, you can do something like:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">number</span> <span class="o">=</span> <span class="s1">&#39;1234567890&#39;</span>
+<span class="n">hidden_number</span> <span class="o">=</span> <span class="s2">&quot;x&quot;</span><span class="o">*</span><span class="mi">7</span> <span class="o">+</span> <span class="n">number</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">:]</span>
+<span class="s1">&#39;xxxxxxx890&#39;</span>
+</code></pre></div>
+
+
+<h4>✨ Reverse a string/ list in a snap</h4>
+<p>If you're coming from C/C++, you would probably remember iterating from the last element explicitly and copying it over to a new variable to get the reverse of a string/array. With Python, you can:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">a</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</code></pre></div>
+
+
+<h4>✨ Else is not only if's sibling but also for's sibling</h4>
+<p><code>else</code> is something all the tutorial covers with the conditionals. It's the same old <em>if this, then this; else this</em>. But did you know that we can use <code>else</code> with our other favourite member of the family - <code>for</code>?
+Here's how it goes.
+Do you remember times when you would <code>break</code> out of the loop when you found something, or a condition satisfied, and you'd use a flag right before you broke out o the loop to let the code after the loop know that you hit a <code>break</code> specifically and it was not the normal end of the loop? The use of <code>for..else</code> eliminates the use o flags wth a simpler syntax.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">a</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;list contains even elements&quot;</span><span class="p">)</span>
+        <span class="k">break</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;list has no even elements&quot;</span><span class="p">)</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span> <span class="n">has</span> <span class="n">no</span> <span class="n">even</span> <span class="n">elements</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">b</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;list contains even elements&quot;</span><span class="p">)</span>
+        <span class="k">break</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;list has no even elements&quot;</span><span class="p">)</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span> <span class="n">contains</span> <span class="n">even</span> <span class="n">elements</span>
+</code></pre></div>
+
+
+<h4>✨ Revelio</h4>
+<p>Suppose you have a Python object, it can be anything - functions/ modules/ dictionaries, and it can be created by you or fetched via an API or third-party code. Often times, we need to know the list of attributes and methods that are available on the object. Instead of looking at the code, we can simply list those out using <code>dir</code>.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">Example</span><span class="p">:</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;example&quot;</span>
+    <span class="n">ex_id</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">def</span> <span class="nf">ex_print</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;example instance&quot;</span><span class="p">)</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="s1">&#39;__class__&#39;</span><span class="p">,</span> <span class="s1">&#39;__delattr__&#39;</span><span class="p">,</span> <span class="s1">&#39;__dict__&#39;</span><span class="p">,</span> <span class="s1">&#39;__dir__&#39;</span><span class="p">,</span> <span class="s1">&#39;__doc__&#39;</span><span class="p">,</span> <span class="s1">&#39;__eq__&#39;</span><span class="p">,</span> <span class="s1">&#39;__format__&#39;</span><span class="p">,</span> <span class="s1">&#39;__ge__&#39;</span><span class="p">,</span> <span class="s1">&#39;__getattribute__&#39;</span><span class="p">,</span> <span class="s1">&#39;__gt__&#39;</span><span class="p">,</span> <span class="s1">&#39;__hash__&#39;</span><span class="p">,</span> <span class="s1">&#39;__init__&#39;</span><span class="p">,</span> <span class="s1">&#39;__init_subclass__&#39;</span><span class="p">,</span> <span class="s1">&#39;__le__&#39;</span><span class="p">,</span> <span class="s1">&#39;__lt__&#39;</span><span class="p">,</span> <span class="s1">&#39;__module__&#39;</span><span class="p">,</span> <span class="s1">&#39;__ne__&#39;</span><span class="p">,</span> <span class="s1">&#39;__new__&#39;</span><span class="p">,</span> <span class="s1">&#39;__reduce__&#39;</span><span class="p">,</span> <span class="s1">&#39;__reduce_ex__&#39;</span><span class="p">,</span> <span class="s1">&#39;__repr__&#39;</span><span class="p">,</span> <span class="s1">&#39;__setattr__&#39;</span><span class="p">,</span> <span class="s1">&#39;__sizeof__&#39;</span><span class="p">,</span> <span class="s1">&#39;__str__&#39;</span><span class="p">,</span> <span class="s1">&#39;__subclasshook__&#39;</span><span class="p">,</span> <span class="s1">&#39;__weakref__&#39;</span><span class="p">,</span> <span class="s1">&#39;ex_id&#39;</span><span class="p">,</span> <span class="s1">&#39;ex_print&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">]</span>
+</code></pre></div>
+
+
+<p>The above list is the list of attributes and methods of the object without the values. Notice the <code>ex_id</code>, <code>ex_print</code>, <code>name</code> in the list - this could come very handy while dealing with objects and to know what methods/attributes are available on them.</p>
+<h4>✨ Passing attributes to a function for the unknown</h4>
+<p>Let's take a function where you have a bunch of optional arguments and you need to call the function a couple of times, every time with a different set of arguments.</p>
+<p>If you've worked with Django ORM, you'd know that <code>filter()</code> accepts a bunch of filter values. For the ones who are new to this:
+In Django, databases are made easier with an Object Relation Mapper. This also makes querying the database easier for certain records. Suppose we have a table of users who can be a staff user or not, and belong to a certain department of the organization. Long story short, we want a function that fetches the records based on different filter combinations and calculates their ranking points for the organization's benefit plans.
+One way to do this would be to fetch records separately for each filter combination we need and then calculate the ranking points, or the other would be to perform the filtering inside the function. We'll go with the latter option for this article. Let's take a look in more detail:</p>
+<p>For filtering, the syntax goes </p>
+<div class="codehilite"><pre><span></span><code><span class="n">records</span> <span class="o">=</span> <span class="n">UserTable</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">is_staff</span><span class="o">=&lt;</span><span class="n">value</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">department</span><span class="o">=&lt;</span><span class="n">value</span><span class="o">&gt;</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>Instead of saying <code>department=None</code> (which would search for None values) when not wanting o filter on the department, we could just not pass the department to the filter - it's optional! But we do need only one instruction that would handle all the combinations and cases. Maybe an example would help:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">args1</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;is_staff&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+<span class="n">args2</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;is_staff&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;department&#39;</span><span class="p">:</span> <span class="s1">&#39;Mgmt&#39;</span><span class="p">}</span>
+<span class="n">args3</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;department&#39;</span><span class="p">:</span> <span class="s1">&#39;Ops&#39;</span><span class="p">}</span>
+</code></pre></div>
+
+
+<p>Let these be the 3 filters you want to perform but you have a common function where you want to pass the filtering values:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">get_ranking</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+   <span class="n">members</span> <span class="o">=</span> <span class="n">UserTable</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">)</span>
+   <span class="k">for</span> <span class="n">member</span> <span class="ow">in</span>  <span class="n">members</span><span class="p">:</span>
+        <span class="c1"># do something</span>
+        <span class="k">pass</span>
+</code></pre></div>
+
+
+<p>With this, we do not need to worry about calling <code>get_ranking()</code> with different sets of arguments. We can:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">rankings</span> <span class="o">=</span> <span class="n">get_ranking</span><span class="p">(</span><span class="n">args1</span><span class="p">)</span>
+<span class="n">rankings</span> <span class="o">=</span> <span class="n">get_ranking</span><span class="p">(</span><span class="n">args2</span><span class="p">)</span>
+<span class="n">rankings</span> <span class="o">=</span> <span class="n">get_ranking</span><span class="p">(</span><span class="n">args3</span><span class="p">)</span> 
+</code></pre></div>
+
+
+<p>Here's what the function actually unpacks to:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">members</span> <span class="o">=</span> <span class="n">UserTable</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">)</span>
+<span class="n">members</span> <span class="o">=</span> <span class="n">UserTable</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">is_staff</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>    <span class="c1"># with args1</span>
+<span class="n">members</span> <span class="o">=</span> <span class="n">UserTable</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">is_staff</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">department</span><span class="o">=</span><span class="s1">&#39;Mgmt&#39;</span><span class="p">)</span>    <span class="c1"># with args2</span>
+<span class="n">members</span> <span class="o">=</span> <span class="n">UserTable</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">department</span><span class="o">=</span><span class="s1">&#39;Ops&#39;</span><span class="p">)</span>    <span class="c1"># with args3</span>
+</code></pre></div>
+
+
+<hr />
+<p>That's all for this post, maybe I will come across some more exciting stuff (which I'm sure Python is full of) and continue this series for any and every mood that you might have. Let me know where and how you've used the tricks or plan to use them, so we can all bathe in the magic of Python.</p>
+        </article>
+    </section>
+    
+</body>
+</html>

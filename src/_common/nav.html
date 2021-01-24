@@ -1,0 +1,23 @@
+<nav>
+    <button class="visible-nav-menu-head">
+        &#9776; 
+    </button>
+    <ul class="nav-menu-items position-fixed">
+        <li><a href="/">🏠 Home</a></li>
+        <li><a href="/blog/">👩‍💻 Tech Blog</a></li>
+        <li><a href="/projects/">🛠️ Projects</a></li>
+        <li><a href="https://riskouse.wordpress.com">✍️ Scribbles</a></li>
+        <li><a href="https://instagram.com?">🎨 Doodles</a></li>
+        <li><a href="/resume/">📝 Resume</a></li>
+        <li><a href="/contact/">💬 Contact</a></li>
+    </ul>
+</nav>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script>
+    $(function(){
+        $(".visible-nav-menu-head").on('click', function() {
+            $(".nav-bg").toggleClass('high-tide');
+            $(".nav-menu-items").fadeToggle();
+        })
+    })
+</script>
