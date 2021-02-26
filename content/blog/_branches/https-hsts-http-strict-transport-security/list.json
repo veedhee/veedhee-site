@@ -1,0 +1,5 @@
+{
+    "title": "HSTS (HTTP Strict Transport Security) - A buddy to HTTPS 🛡️",
+    "desc": "HTTPS is important, but so is its friend HSTS. Here, we discuss both https and hsts to figure out why we need them, and how we use them to make our websites more secure.",
+    "chrono": 3
+}
