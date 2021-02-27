@@ -8,7 +8,7 @@ keywords: security
         https
         hsts
         http strict transport security
-header_image: https://cdn-images-1.medium.com/max/800/1*etsG-pvhozsmeWDyVrXXkA.jpeg
+header_image: /_common/_assets/img/hsts.png
 description: A learning guide to what HSTS is with its buddy HTTPS
 ---
 
@@ -60,18 +60,56 @@ Is there a caveat here as well? Hmm, we'll see. ut first let's have the last pie
 
 #### 🛡️ HSTS! Dis-assemble!
 
-The HSTS hader can be set in a response like you'd set u any other header. For more technical how-to, visit your preferred backend tech documentation. Te syntax for the header is:
+The HSTS hader can be set in a response like you'd set u any other header. For more technical how-to, visit your preferred backend tech documentation. The syntax for the header is:
 
 ```s
-Stric-Transport-Security: max-age=<expiry_time>; [includeSubDomains] [preload]
+Strict-Transport-Security: max-age=<expiry_time>; [includeSubDomains] [preload]
 ```
 
 In the above syntax, the directives enclosed in square brackets [] are optional. 
 
-1. max-age: This is what tells the browser the duration for which it has to remember to exclusvely access a domain over https. This is specified in seconds and the maximum value is 2 years.
-We usually specify the HSTS header for every response delivered over https. Thus, whenever the header is sent in the response, the rwser will update the expiration time for that ste, and this duration is refreshed which prevents it from timing out and expiring.
+1. max-age: This is what tells the browser the duration for which it has to remember to exclusvely access a domain over https. This is specified in seconds and the maximum value is 2 years.  
+We usually specify the HSTS header for every response delivered over https. Thus, whenever the header is sent in the response, the rwser will update the expiration time for that ste, and this duration is refreshed which prevents it from timing out and expiring.  
 When the specified time elapses, the next attemt to request resource over http will proceed normally without automatically using https. 
 
 2. includeSubDomains: This is optional. If this parameter is included in the header value, the security enforcement will be applied to all the subdomains of the site.
 
-3. preload: This is optonal as well. _[continued...]_
+3. preload: This is optonal as well. This is an additional layer of protection that helps to tackle the issue that still remains after using the HSTS header. Adding this directive indicates that you want to be preloaded. We will discuss about it in detail in the next section.
+
+#### 🛡️ HSTS Preload List
+
+Let's talk about the caveat that remains. We now know that with the help of redirection and HSTS, the user only has to visit the site over https once before it expires to enforce communications over https. But it leaves open a small window of opportunity for attackers to sniff data and modify it if they want to. 
+
+Suppose you visit a site for the first time using http, and then the website redirects you to the https version and sends you the HSTS header in response. You are safe for any subsequent connections, but that first connection that you had made insecurely, is what might ultimately prove to be a point of failure.
+
+HSTS preload is _not_ part of the HSTS standard spec though. The HSTS preload list is a list maintained by the Chromium project which is used by most major browsers.
+
+The browser has this internal preload list which is checked when making a connection. So suppose you have ever visited a website before but you have the domain added in the preload list, and you try to access the website over http for the intial request - it will not happen. The website then is never accessed via HTTP, and that includes the first connection which was the tiny window for an attack. 
+
+In short, if your domain is added into the HSTS preload list, most browsers will never connect to your domain without https. 
+
+#### 🛡️ How to add to the HSTS Preload List
+
+Theere are certain requirements that need to be fulfilled before you can request your domain to be added to the HSTS Preload List.
+
+1. Your site must serve a valid certificate
+2. If you are listending for HTTP requests, your site should redirect all requests to HTTPS
+3. All the subdomains must be served over HTTPS.
+4. For your base domain, serve the HSTS header with: 1) max-age of at least 1 year; 2) includeSubDomains directive; 3) preload directive.
+5. Make sure the site continues to satisfy the above requirements at all times. Removing the ```preload``` directive will make your site available for the HSTS preload removal.
+
+So after you have made sure that all your subdomains are served over HTTPS with a valid certificate, and that nothing breaks with the addition of HSTS headers (try it out with max-age of a few minutes first), add the ```preload``` directive to the header. 
+
+Then, head over to [hstspreload.org](https://hstspreload.org) and submit your domain. You can also find more cautions listed on the page and the step for removal if anything goes wrong, which is not a process they recommend. So try to be sure and test HSTS without the preload before you request to add a domain to the preload list.
+
+This list is not immediately updated by the browser by downloading it over everyday or at intervals. It is a hard-coded list which is distriuted with new browser versions, which means that it might take some time for your site to appear/remove in one of the browser's list.
+
+#### 🛡️ Tip for tiny rewinds
+
+When testing HSTS with smaller ```max-age``` (and without the preload coming into the picture), you might occassionally want to remove the HTTPS-only restriction of your site. [appuals](https://appuals.com/how-to-clear-or-disable-hsts-for-chrome-firefox-and-internet-explorer/) has a very helpful section on how to remove a domain from HSTS cache in browser. I will brief it here ut you can find more information for more browsers in the given link. Note that this will _not_ be effective if the domain is included in the preload list.
+
+**Chrome**  
+Visit [chrome://net-internals/#hsts](chrome://net-internals/#hsts) from your browser. Enter the domain name in the "Delete domain security policies" section and hit Enter. Restart Chrome.
+
+**Firefox**  
+One way to delete HSTS cache for a site would be to "Forget ABout this Site" but that would remove a lot more data than just the HSTS restriction. For more methods, visit the above link.
