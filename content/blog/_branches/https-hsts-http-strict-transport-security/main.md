@@ -8,7 +8,7 @@ keywords: security
         https
         hsts
         http strict transport security
-header_image: /_common/_assets/img/hsts.jpg
+header_image: https://veedhee.com/_common/_assets/img/hsts.jpg
 description: A learning guide to what HSTS is with its buddy HTTPS
 ---
 
